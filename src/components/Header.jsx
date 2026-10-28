@@ -1,41 +1,41 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const LINKS = [
-  ['#inicio', 'Início'],
-  ['#produtos', 'Produtos'],
-  ['#kits', 'Kits'],
-  ['#sobre', 'Sobre'],
-  ['#contato', 'Contato'],
-];
+export default function Header({ searchTerm, setSearchTerm }) {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-export default function Header() {
-  const [open, setOpen] = useState(false);
   return (
-    <header className="header">
-      <div className="container header-inner">
-        <a href="#inicio" className="brand" aria-label="Dona Encanto - início">
-          <span className="brand-name">Dona Encanto 🎀</span>
-          <span className="brand-sub">MAQUIAGEM • SKINCARE • ACESSÓRIOS</span>
-        </a>
-        <button
-          className="menu-btn"
-          aria-expanded={open}
-          aria-controls="nav"
-          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-          onClick={() => setOpen(!open)}
-        >
-          {open ? '✕' : '☰'}
+    <header className="site-header">
+      <div className="header-container">
+        <div className="logo-area">
+          <span className="logo-icon">🎀</span>
+          <div>
+            <h1 className="logo-title">Dona Encanto</h1>
+            <p className="logo-sub">MAQUIAGEM & ACESSÓRIOS</p>
+          </div>
+        </div>
+
+        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? '✕' : '☰'}
         </button>
-        <nav id="nav" className={`nav ${open ? 'open' : ''}`} aria-label="Principal">
-          {LINKS.map(([href, label]) => (
-            <a key={href} href={href} onClick={() => setOpen(false)}>
-              {label}
-            </a>
-          ))}
-          <a href="#produtos" className="nav-search" onClick={() => setOpen(false)}>
-            🔍 Buscar
-          </a>
+
+        <nav className={`nav-menu ${menuOpen ? 'open' : ''}`}>
+          <a href="#catalogo" onClick={() => setMenuOpen(false)}>Início</a>
+          <a href="#produtos" onClick={() => setMenuOpen(false)}>Produtos</a>
+          <a href="#kits" onClick={() => setMenuOpen(false)}>Kits</a>
+          <a href="#sobre" onClick={() => setMenuOpen(false)}>Sobre</a>
+          <a href="#contato" onClick={() => setMenuOpen(false)}>Contato</a>
         </nav>
+      </div>
+
+      <div className="search-bar-container">
+        <span className="search-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Pesquisar produto, marca ou categoria..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
       </div>
     </header>
   );
