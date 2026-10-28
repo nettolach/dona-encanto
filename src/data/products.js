@@ -1,4 +1,13 @@
-export const products = [
+export const CATEGORIES = [
+  { id: 'all', name: '✨ Todos' },
+  { id: 'labiais', name: '💄 Labiais' },
+  { id: 'rosto', name: '✨ Rosto' },
+  { id: 'olhos', name: '👁️ Olhos' },
+  { id: 'skincare', name: '🌿 Skincare' },
+  { id: 'acessorios', name: '🎀 Acessórios' }
+];
+
+export const PRODUCTS = [
   {
     id: "1",
     name: "Lip Balm Cupcake (We Candy)",
@@ -126,3 +135,5 @@ export const products = [
     image: "IMG-20261027-WA0040.jpg"
   }
 ];
+
+export const products = PRODUCTS;
