@@ -3,11 +3,12 @@ import React from 'react';
 export default function ProductModal({ product, onClose }) {
   if (!product) return null;
 
-  const getImageUrl = (imgpath) => {
-    if (!imgpath) return '';
-    if (imgpath.startsWith('http')) return imgpath;
-    const cleanPath = imgpath.startsWith('/') ? imgpath : `/${imgpath}`;
-    return cleanPath.startsWith('/dona-encanto/') ? cleanPath : `/dona-encanto${cleanPath}`;
+  const getImageUrl = (imgPath) => {
+    if (!imgPath) return '';
+    if (imgPath.startsWith('http')) return imgPath;
+    const cleanImg = imgPath.startsWith('/') ? imgPath.slice(1) : imgPath;
+    const base = import.meta.env.BASE_URL || '/';
+    return `${base}${cleanImg}`;
   };
 
   return (
@@ -27,9 +28,9 @@ export default function ProductModal({ product, onClose }) {
           href={`https://wa.me/554197364003?text=Olá! Gostaria de encomendar o produto: ${encodeURIComponent(product.name)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-buy modal-buy-btn"
+          className="modal-buy-btn"
         >
-          Comprar no WhatsApp
+          💬 Comprar no WhatsApp
         </a>
       </div>
     </div>
