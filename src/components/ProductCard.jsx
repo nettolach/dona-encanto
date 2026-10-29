@@ -1,47 +1,52 @@
-import React from 'react';
+import { useState } from 'react';
+import { CATEGORIES } from '../data/products.js';
+import { productLink } from '../utils/whatsapp.js';
 
-export default function ProductCard({ product, onSelect }) {
-  // Usa o BASE_URL do Vite configurado no vite.config.js (ex: /dona-encanto/)
-  const getImageUrl = (imgPath) => {
-    if (!imgPath) return '';
-    if (imgPath.startsWith('http')) return imgPath;
-    const cleanImg = imgPath.startsWith('/') ? imgPath.slice(1) : imgPath;
-    const base = import.meta.env.BASE_URL || '/';
-    return `${base}${cleanImg}`;
-  };
-
-  return (
-    <div className="product-card-box">
-      <div className="product-img-wrapper" onClick={() => onSelect(product)}>
-        <img
-          src={getImageUrl(product.image)}
-          alt={product.name}
-          className="product-card-img"
-          loading="lazy"
-        />
-        <span className="product-badge">Destaque</span>
+export function ProductImage({ product, eager = false }) {
+  const [failed, setFailed] = useState(false);
+  const cat = CATEGORIES.find((c) => c.id === product.category);
+  if (failed) {
+    return (
+      <div className="img-placeholder" role="img" aria-label={`Imagem de ${product.name} indisponível`}>
+        <span>{cat?.icon}</span>
+        <small>Foto em breve</small>
       </div>
-      <div className="product-card-content">
-        <h3 className="product-card-title">{product.name}</h3>
-        <p className="product-card-desc">
-          {product.description.length > 70 
-            ? `${product.description.substring(0, 70)}...` 
-            : product.description}
-        </p>
-        <div className="product-card-actions">
-          <button onClick={() => onSelect(product)} className="btn-action btn-details">
-            👁️ Ver Detalhes
+    );
+  }
+  return (
+    <img
+      src={`${import.meta.env.BASE_URL}${product.image}`}
+      alt={product.name}
+      width="400"
+      height="400"
+      loading={eager ? 'eager' : 'lazy'}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+export default function ProductCard({ product, onOpen }) {
+  const cat = CATEGORIES.find((c) => c.id === product.category);
+  return (
+    <article className="card" data-cat={product.category}>
+      <div className="card-img">
+        <ProductImage product={product} />
+      </div>
+      <div className="card-body">
+        <span className="tag">{cat?.icon} {cat?.label}</span>
+        <h3>{product.name}</h3>
+        {product.brand && <p className="brand-line">{product.brand}</p>}
+        <p className="desc">{product.description}</p>
+        <p className="price">{product.price ?? 'Consulte o preço'}</p>
+        <div className="card-actions">
+          <button type="button" className="btn btn-soft" onClick={() => onOpen(product)}>
+            Ver produto
           </button>
-          <a
-            href={`https://wa.me/554197364003?text=Olá! Gostaria de encomendar o produto: ${encodeURIComponent(product.name)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-action btn-whatsapp"
-          >
-            💬 Comprar no WhatsApp
+          <a className="btn btn-primary" href={productLink(product.name)} target="_blank" rel="noopener noreferrer">
+            Pedir pelo WhatsApp
           </a>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
