@@ -6,6 +6,7 @@ import Hero from './components/Hero.jsx';
 import ProductCard from './components/ProductCard.jsx';
 import ProductModal from './components/ProductModal.jsx';
 import { Kits, About, InstagramSection, ContactSection } from './components/Sections.jsx';
+import { HowToBuy, Payments } from './components/Info.jsx';
 import Footer from './components/Footer.jsx';
 import WhatsAppButton from './components/WhatsAppButton.jsx';
 
@@ -81,6 +82,8 @@ export default function App() {
           </div>
         </section>
         <Kits onShowKits={() => { setCategory('all'); setQuery('Kit Encanto'); }} />
+        <HowToBuy />
+        <Payments />
         <About />
         <InstagramSection />
         <ContactSection />

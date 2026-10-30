@@ -4,6 +4,7 @@ const LINKS = [
   ['#inicio', 'Início'],
   ['#produtos', 'Produtos'],
   ['#kits', 'Kits'],
+  ['#compras', 'Como comprar'],
   ['#sobre', 'Sobre'],
   ['#contato', 'Contato'],
 ];
